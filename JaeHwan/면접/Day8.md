@@ -44,6 +44,79 @@ calculate(5, 3, multiply, function (result) {
 
 ### 콜백 지옥을 해결하는 방법을 설명해주세요.
 
+콜백 지옥(Callback Hell)은 JavaScript에서 비동기 처리를 위해 콜백 함수를 중첩하여 사용할 때 발생하는 코드의 복잡성과 가독성이 떨어지는 상황을 가리킵니다. 콜백 함수가 여러 겹 중첩되면 코드가 계속해서 오른쪽으로 들여쓰기되면서 코드의 가독성이 저하되고 유지보수가 어려워지는 문제가 발생합니다.
+
+아래는 콜백 지옥의 예제 코드입니다.
+
+```javascript
+asyncFunction1(function (result1) {
+  asyncFunction2(result1, function (result2) {
+    asyncFunction3(result2, function (result3) {
+      asyncFunction4(result3, function (result4) {
+        // ... 더 이어질 수 있음
+      });
+    });
+  });
+});
+```
+
+콜백 지옥을 해결하기 위한 여러 가지 방법이 있습니다.
+
+1. **콜백 헬의 이름화 (Named Callbacks):** 각각의 콜백 함수를 개별적인 함수로 정의하고 이름을 부여하여 코드의 가독성을 향상시킬 수 있습니다.
+
+   ```javascript
+   function handleResult1(result1) {
+     asyncFunction2(result1, handleResult2);
+   }
+
+   function handleResult2(result2) {
+     asyncFunction3(result2, handleResult3);
+   }
+
+   function handleResult3(result3) {
+     asyncFunction4(result3, handleResult4);
+   }
+
+   function handleResult4(result4) {
+     // ... 더 이어질 수 있음
+   }
+
+   asyncFunction1(handleResult1);
+   ```
+
+2. **Promise 사용:** Promise를 사용하여 비동기 코드를 좀 더 구조적으로 표현할 수 있습니다.
+
+   ```javascript
+   asyncFunction1()
+     .then((result1) => asyncFunction2(result1))
+     .then((result2) => asyncFunction3(result2))
+     .then((result3) => asyncFunction4(result3))
+     .then((result4) => {
+       // ... 더 이어질 수 있음
+     })
+     .catch((error) => console.error(error));
+   ```
+
+3. **Async/Await 사용:** Promise를 기반으로 하는 Async/Await 문법을 사용하여 코드를 동기적으로 보이게 작성할 수 있습니다.
+
+   ```javascript
+   async function myAsyncFunction() {
+     try {
+       const result1 = await asyncFunction1();
+       const result2 = await asyncFunction2(result1);
+       const result3 = await asyncFunction3(result2);
+       const result4 = await asyncFunction4(result3);
+       // ... 더 이어질 수 있음
+     } catch (error) {
+       console.error(error);
+     }
+   }
+
+   myAsyncFunction();
+   ```
+
+이러한 방법들은 코드를 간결하게 작성하고 가독성을 향상시키면서도 비동기적인 작업을 효과적으로 처리할 수 있게 도와줍니다. 선택한 방법은 프로젝트의 요구 사항과 개발자의 선호도에 따라 다를 수 있습니다.
+
 ### Promise와 Callback를 비교 설명해주세요.
 
 ```
