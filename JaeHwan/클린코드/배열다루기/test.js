@@ -57,13 +57,35 @@
 // abc(arr);
 
 // 불변성
-const originArray = [1, 2, 3, 4, 5];
+// const originArray = [1, 2, 3, 4, 5];
 
-const newArrary = originArray;
+// const newArrary = originArray;
 
-originArray.push(11);
-originArray.push(12);
-originArray.push(13);
-originArray.pop();
+// originArray.push(11);
+// originArray.push(12);
+// originArray.push(13);
+// originArray.pop();
 
-console.log(newArrary);
+// console.log(newArrary);
+
+// for (var i = 0; i < 3; i++) {
+//   setTimeout(() => console.log(i), 1);
+// }
+
+// for (let i = 0; i < 3; i++) {
+//   setTimeout(() => console.log(i), 1);
+// }
+
+// function outerFunction() {
+//   const innerFunction = () => {
+//     console.log(this); // outerFunction의 this를 가리킵니다.
+//   };
+//   innerFunction();
+// }
+
+// outerFunction();
+
+const original = { a: 1, b: 2 };
+const copied = { ...original };
+copied.a = 3;
+console.log(original.a); // 1
